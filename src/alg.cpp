@@ -4,7 +4,6 @@
 
 int priority(char ch_inf)
 {
-
     switch (ch_inf)
     {
     case '(':return 0;
@@ -81,7 +80,6 @@ std::string infx2pstfx(std::string inf)
     out.erase(out.end() - 1, out.end());
     return out;
 }
-
 
 int eval(std::string pst)
 {
