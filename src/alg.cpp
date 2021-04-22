@@ -39,7 +39,7 @@ std::string infx2pstfx(std::string inf)
         int check = priority(ch_inf);
 
         if (check == -1)
-            str.append(string(1, ch_inf));
+            str.append(std::string(1, ch_inf));
         else
         {
             if (stack1.isEmpty() || check == 0 || check > priority(stack1.get()))
@@ -52,7 +52,7 @@ std::string infx2pstfx(std::string inf)
                         char symbol = stack1.get();
                         stack1.pop();
                         if (symbol != '(')
-                            str.append(string(1, symbol));
+                            str.append(std::string(1, symbol));
                     }
                 }
                 else
@@ -63,7 +63,7 @@ std::string infx2pstfx(std::string inf)
                         stack1.pop();
 
                         if (priority(last_element) >= check)
-                            str.append(string(1, last_element));
+                            str.append(std::string(1, last_element));
                     }
                     stack1.push(ch_inf);
                 }
@@ -74,7 +74,7 @@ std::string infx2pstfx(std::string inf)
     {
         char last_element = stack1.get();
         stack1.pop();
-        str.append(string(1, last_element));
+        str.append(std::string(1, last_element));
     }
     return str;
 }
