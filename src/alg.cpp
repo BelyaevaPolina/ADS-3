@@ -2,10 +2,11 @@
 #include <string>
 #include "tstack.h"
 
-std::int priority(std::char ch_inf)
+int priority(char ch_inf)
 {
-  switch (ch_inf)
-  {
+
+    switch (ch_inf)
+    {
     case '(':return 0;
     case ')':return 1;
     case '+':return 2;
@@ -15,23 +16,27 @@ std::int priority(std::char ch_inf)
     default:return -1;
     }
 }
-std::int calculator(std::int num1, std::int num2 , std::char ch_pst) {
-  switch (ch_pst)
-  {
+
+int calculator(int num1, int num2 , char ch_pst) {
+    switch (ch_pst)
+    {
     case '+': return num1 + num2;
     case '-': return num1 - num2;
     case'*': return num1 * num2;
     case '/': return num1 / num2;
     }
 }
+
 std::string infx2pstfx(std::string inf)
 {
-  TStack<std::char> stack1;
+    TStack<char> stack1;
+
     std::string str = "";
-    for (std::int i = 0; i < inf.size(); i++)
+
+    for (int i = 0; i < inf.size(); i++)
     {
-        std::char ch_inf = inf[i];
-        std::int check = priority(ch_inf);
+        char ch_inf = inf[i];
+        int check = priority(ch_inf);
 
         if (check == -1)
             str.append(string(1, ch_inf));
@@ -43,9 +48,8 @@ std::string infx2pstfx(std::string inf)
             {
                 if (check == 1)
                 {
-                    while (true)
-                    {
-                        std::char symbol = stack1.get();
+                    while (true) {
+                        char symbol = stack1.get();
                         stack1.pop();
                         if (symbol != '(')
                             str.append(string(1, symbol));
@@ -55,7 +59,7 @@ std::string infx2pstfx(std::string inf)
                 {
                     while (!stack1.isEmpty())
                     {
-                        std::char last_element = stack1.get();
+                        char last_element = stack1.get();
                         stack1.pop();
 
                         if (priority(last_element) >= check)
@@ -68,34 +72,33 @@ std::string infx2pstfx(std::string inf)
     }
     while (!stack1.isEmpty())
     {
-        std::char last_element = stack1.get();
+        char last_element = stack1.get();
         stack1.pop();
         str.append(string(1, last_element));
     }
     return str;
 }
 
-std::int eval(std::string pst) 
-{
-  TStack<std::int> stack2;
+int eval(std::string pst) {
+    TStack<int> stack2;
 
-    for (std::int i = 0; i < pst.size(); i++)
-    {
-        std::char ch_pst = pst[i];
+    for (int i = 0; i < pst.size(); i++) {
 
-        std::int prior = priority(ch_pst);
+        char ch_pst = pst[i];
+
+        int prior = priority(ch_pst);
 
         if (prior == -1)
             stack2.push(ch_pst - 48);
         else
         {
-            std::int num1 = stack2.get();
+            int num1 = stack2.get();
             stack2.pop();
 
-            std::int num2 = stack2.get();
+            int num2 = stack2.get();
             stack2.pop();
 
-            std::int res = calculator(num1, num2, ch_pst);
+            int res = calculator(num1, num2, ch_pst);
             stack2.push(res);
         }
     }
