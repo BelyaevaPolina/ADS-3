@@ -30,7 +30,7 @@ std::string infx2pstfx(std::string inf)
 {
     char top = 0;
     TStack <char> stack1;
-    std::string out;
+    std::string str_pst;
 
     for (int i = 0; i < inf.length(); i++) {
 
@@ -47,8 +47,8 @@ std::string infx2pstfx(std::string inf)
             }
             else if (ch == ')') {
                 while (stack1.get() != '(') {
-                    out.push_back(stack1.get());
-                    out.push_back(' ');
+                    str_pst.push_back(stack1.get());
+                    str_pst.push_back(' ');
                     stack1.pop();
                 }
                 stack1.pop();
@@ -58,8 +58,8 @@ std::string infx2pstfx(std::string inf)
             else {
                 while (!stack1.isEmpty() &&
                     priority(stack1.get()) >= prior) {
-                    out.push_back(stack1.get());
-                    out.push_back(' ');
+                    str_pst.push_back(stack1.get());
+                    str_pst.push_back(' ');
                     stack1.pop();
                 }
                 if (stack1.isEmpty())
@@ -68,18 +68,19 @@ std::string infx2pstfx(std::string inf)
             }
         }
         else {
-            out.push_back(ch);
-            out.push_back(' ');
+            str_pst.push_back(ch);
+            str_pst.push_back(' ');
         }
     }
     while (!stack1.isEmpty()) {
-        out.push_back(stack1.get());
-        out.push_back(' ');
+        str_pst.push_back(stack1.get());
+        str_pst.push_back(' ');
         stack1.pop();
     }
-    out.erase(out.end() - 1, out.end());
-    return out;
+    str_pst.erase(str_pst.end() - 1, str_pst.end());
+    return str_pst;
 }
+
 
 int eval(std::string pst)
 {
