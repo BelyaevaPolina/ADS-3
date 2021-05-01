@@ -82,30 +82,37 @@ std::string infx2pstfx(std::string inf)
 }
 
 
-int eval(std::string pst)
-{
+int eval(std::string pst) {
     TStack <int> stack2;
-
-    for (int i = 0; i < pst.size(); i++)
-    {
-        char ch = pst[i];
-        int prior = priority(ch);
-
-        if (prior == -1)
-            stack2.push(ch - 48);
-        else
-        {
-            int num1 = stack2.get();
-            stack2.pop();
-
+    int i = 0, res = 0;
+    char ch = pst[i];
+    while (ch) {
+        if (ch >= '0' && ch <= '9') {
+            int num = 0;
+            int dec = 1;
+            while (ch != ' ') {
+                num += (ch - 48) * dec;
+                dec *= 10;
+                ch = pst[++i];
+            }
+            stack2.push(num);
+        }
+        else {
+            char ch_pst = ch;
+            i++;
             int num2 = stack2.get();
             stack2.pop();
-
-
-            int res = calculator(num2, num1, ch);
+            int num1 = stack2.get();
+            stack2.pop();
+            int result = calculator(num1, num2, ch_pst);
             stack2.push(res);
         }
-
+        if (i < pst.size())
+            ch = pst[++i];
+        else
+            ch = 0;
     }
-    return stack2.get();
+    res = stack2.get();
+    stack2.pop();
+    return res;
 }
