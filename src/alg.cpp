@@ -16,7 +16,7 @@ int priority(char ch) {
 std::string infx2pstfx(std::string inf) {
     char top = 0;
     TStack <char> stack1;
-    std::string str_pst;
+    std::string strpst;
     for (int i = 0; i < inf.length(); i++) {
         int prior;
         prior = priority(inf[i]);
@@ -28,8 +28,8 @@ std::string infx2pstfx(std::string inf) {
                 stack1.push(inf[i]);
             } else if (inf[i] == ')') {
                 while (stack1.get() != '(') {
-                    str_pst.push_back(stack1.get());
-                    str_pst.push_back(' ');
+                    strpst.push_back(stack1.get());
+                    strpst.push_back(' ');
                     stack1.pop();
                 }
                 stack1.pop();
@@ -38,8 +38,8 @@ std::string infx2pstfx(std::string inf) {
             } else {
                 while (!stack1.isEmpty() &&
                     priority(stack1.get()) >= prior) {
-                    str_pst.push_back(stack1.get());
-                    str_pst.push_back(' ');
+                    strpst.push_back(stack1.get());
+                    strpst.push_back(' ');
                     stack1.pop();
                 }
                 if (stack1.isEmpty())
@@ -47,16 +47,16 @@ std::string infx2pstfx(std::string inf) {
                 stack1.push(inf[i]);
             }
         } else {
-            str_pst.push_back(inf[i]);
-            str_pst.push_back(' ');
+            strpst.push_back(inf[i]);
+            strpst.push_back(' ');
         }
     }
     while (!stack1.isEmpty()) {
-        str_pst.push_back(stack1.get());
-        str_pst.push_back(' ');
+        strpst.push_back(stack1.get());
+        strpst.push_back(' ');
         stack1.pop();
     }
-    str_pst.erase(str_pst.end() - 1, str_pst.end());
+    strpst.erase(strpst.end() - 1, strpst.end());
     return str_pst;
 }
 int calculator(int num1, int num2, char operation) {
@@ -74,14 +74,14 @@ int eval(std::string pst) {
     char ch = pst[i];
     while (ch) {
         if (ch >= '0' && ch <= '9') {
-            int ch_pst = 0;
+            int chpst = 0;
             int dec = 1;
             while (ch != ' ') {
-                ch_pst += (ch - 48) * dec;
+                chpst += (ch - 48) * dec;
                 dec *= 10;
                 ch = pst[++i];
             }
-            stack2.push(ch_pst);
+            stack2.push(chpst);
         } else {
             char operation = ch;
             i++;
